@@ -21,6 +21,7 @@ struct FilmDetailView: View {
                     Text(film.title)
                         .font(.title)
                         .fontWeight(.bold)
+                        .foregroundColor(.white)
 
                     HStack {
                         Text(film.genre)
@@ -28,7 +29,7 @@ struct FilmDetailView: View {
                         Text("⭐️ \(String(format: "%.1f", film.rating))")
                     }
                     .font(.subheadline)
-                    .foregroundColor(.gray)
+                    .foregroundColor(.green)
 
                     HStack {
                         Image(systemName: "clock")
@@ -37,18 +38,19 @@ struct FilmDetailView: View {
                         Text("📺 \(film.platform)")
                     }
                     .font(.subheadline)
-                    .foregroundColor(.secondary)
+                    .foregroundColor(.gray)
                 }
 
-                Divider()
+                Divider().background(Color.white)
 
                 // Sinopsis
-                GroupBox(label: Label("Sinopsis", systemImage: "text.book.closed")) {
+                GroupBox(label: Label("Sinopsis", systemImage: "text.book.closed").foregroundColor(.green)) {
                     VStack(alignment: .leading, spacing: 6) {
                         Text(film.synopsis)
                             .font(.body)
                             .lineLimit(showFullSynopsis ? nil : 4)
                             .truncationMode(.tail)
+                            .foregroundColor(.white)
 
                         if !showFullSynopsis {
                             Button("Selengkapnya...") {
@@ -57,24 +59,28 @@ struct FilmDetailView: View {
                                 }
                             }
                             .font(.caption)
-                            .foregroundColor(.blue)
+                            .foregroundColor(.green)
                         }
                     }
                 }
+                .groupBoxStyle(DefaultGroupBoxStyle())
+                .foregroundColor(.white)
 
                 // Ulasan
-                GroupBox(label: Label("Ulasan Penonton", systemImage: "person.2.fill")) {
+                GroupBox(label: Label("Ulasan Penonton", systemImage: "person.2.fill").foregroundColor(.green)) {
                     ForEach(film.reviews.prefix(3)) { review in
                         VStack(alignment: .leading, spacing: 4) {
                             Text(review.username)
                                 .font(.subheadline)
                                 .bold()
+                                .foregroundColor(.green)
                             Text("\"\(review.comment)\"")
                                 .italic()
                                 .font(.body)
+                                .foregroundColor(.white)
                         }
                         .padding(8)
-                        .background(Color.gray.opacity(0.1))
+                        .background(Color.gray.opacity(0.15))
                         .cornerRadius(8)
                     }
                 }
@@ -83,8 +89,10 @@ struct FilmDetailView: View {
             }
             .padding()
         }
+        .background(Color.black.ignoresSafeArea())
         .navigationTitle("Detail Film")
         .navigationBarTitleDisplayMode(.inline)
+        .foregroundColor(.white)
     }
 }
 

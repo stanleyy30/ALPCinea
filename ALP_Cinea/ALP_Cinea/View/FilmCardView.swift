@@ -15,9 +15,10 @@ struct FilmCardView: View {
             VStack(alignment: .leading, spacing: 8) {
                 Text(film.title)
                     .font(.headline)
+                    .foregroundColor(.white)
                 Text(film.genre)
                     .font(.subheadline)
-                    .foregroundColor(.secondary)
+                    .foregroundColor(.green)
                 Text("⭐️ \(String(format: "%.1f", film.rating)) • \(film.platform)")
                     .font(.caption)
                     .foregroundColor(.gray)
@@ -29,11 +30,14 @@ struct FilmCardView: View {
 
             Spacer()
         }
-        .padding(.horizontal)
-        .padding(.vertical, 8)
+        .padding()
+        .background(Color(.systemGray6).opacity(0.1))
+        .cornerRadius(12)
+        .shadow(color: .green.opacity(0.3), radius: 5, x: 0, y: 3)
     }
 }
 
 #Preview {
     FilmCardView(film: sampleFilms[0])
+        .background(Color.black)
 }
