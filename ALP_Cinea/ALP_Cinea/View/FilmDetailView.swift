@@ -6,21 +6,18 @@ struct FilmDetailView: View {
 
     var body: some View {
         ScrollView {
-            VStack(alignment: .leading, spacing: 20) {
-                // Poster
+            VStack(alignment: .leading, spacing: 24) {
                 Image(film.posterName)
                     .resizable()
                     .aspectRatio(contentMode: .fill)
-                    .frame(height: 250)
+                    .frame(height: 240)
                     .clipped()
-                    .cornerRadius(12)
-                    .shadow(radius: 5)
+                    .cornerRadius(16)
+                    .shadow(color: .green.opacity(0.3), radius: 6, x: 0, y: 4)
 
-                // Title & Info
-                VStack(alignment: .leading, spacing: 8) {
+                VStack(alignment: .leading, spacing: 10) {
                     Text(film.title)
-                        .font(.title)
-                        .fontWeight(.bold)
+                        .font(.system(size: 24, weight: .bold, design: .rounded))
                         .foregroundColor(.white)
 
                     HStack {
@@ -31,26 +28,28 @@ struct FilmDetailView: View {
                     .font(.subheadline)
                     .foregroundColor(.green)
 
-                    HStack {
+                    HStack(spacing: 4) {
                         Image(systemName: "clock")
                         Text(film.duration)
                         Spacer()
                         Text("📺 \(film.platform)")
                     }
-                    .font(.subheadline)
+                    .font(.footnote)
                     .foregroundColor(.gray)
                 }
 
-                Divider().background(Color.white)
+                Divider().background(Color.gray)
 
-                // Sinopsis
-                GroupBox(label: Label("Sinopsis", systemImage: "text.book.closed").foregroundColor(.green)) {
-                    VStack(alignment: .leading, spacing: 6) {
+                GroupBox(
+                    label: Label("Sinopsis", systemImage: "text.book.closed")
+                        .foregroundColor(.green)
+                ) {
+                    VStack(alignment: .leading, spacing: 8) {
                         Text(film.synopsis)
                             .font(.body)
+                            .foregroundColor(.green)
                             .lineLimit(showFullSynopsis ? nil : 4)
                             .truncationMode(.tail)
-                            .foregroundColor(.white)
 
                         if !showFullSynopsis {
                             Button("Selengkapnya...") {
@@ -62,37 +61,42 @@ struct FilmDetailView: View {
                             .foregroundColor(.green)
                         }
                     }
+                    .padding(.top, 4)
+                    .padding(.bottom, 2)
                 }
                 .groupBoxStyle(DefaultGroupBoxStyle())
-                .foregroundColor(.white)
 
-                // Ulasan
-                GroupBox(label: Label("Ulasan Penonton", systemImage: "person.2.fill").foregroundColor(.green)) {
-                    ForEach(film.reviews.prefix(3)) { review in
-                        VStack(alignment: .leading, spacing: 4) {
-                            Text(review.username)
-                                .font(.subheadline)
-                                .bold()
-                                .foregroundColor(.green)
-                            Text("\"\(review.comment)\"")
-                                .italic()
-                                .font(.body)
-                                .foregroundColor(.white)
+                GroupBox(
+                    label: Label("Ulasan Penonton", systemImage: "person.2.fill")
+                        .foregroundColor(.green)
+                ) {
+                    VStack(spacing: 12) {
+                        ForEach(film.reviews.prefix(3)) { review in
+                            VStack(alignment: .leading, spacing: 6) {
+                                Text(review.username)
+                                    .font(.subheadline)
+                                    .bold()
+                                    .foregroundColor(.green)
+
+                                Text("\"\(review.comment)\"")
+                                    .font(.body)
+                                    .italic()
+                                    .foregroundColor(.green)
+                            }
+                            .padding()
+                            .background(Color(.systemGray5).opacity(0.15))
+                            .cornerRadius(12)
                         }
-                        .padding(8)
-                        .background(Color.gray.opacity(0.15))
-                        .cornerRadius(8)
                     }
                 }
 
-                Spacer()
+                Spacer(minLength: 20)
             }
             .padding()
         }
         .background(Color.black.ignoresSafeArea())
         .navigationTitle("Detail Film")
         .navigationBarTitleDisplayMode(.inline)
-        .foregroundColor(.white)
     }
 }
 
