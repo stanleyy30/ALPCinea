@@ -7,9 +7,7 @@ struct FilmDetailView: View {
     var body: some View {
         ScrollView {
             VStack(alignment: .leading, spacing: 24) {
-                Image(film.posterName)
-                    .resizable()
-                    .aspectRatio(contentMode: .fill)
+                RemoteImageView(imageURL: film.posterName)
                     .frame(height: 240)
                     .clipped()
                     .cornerRadius(16)
@@ -40,10 +38,7 @@ struct FilmDetailView: View {
 
                 Divider().background(Color.gray)
 
-                GroupBox(
-                    label: Label("Sinopsis", systemImage: "text.book.closed")
-                        .foregroundColor(.green)
-                ) {
+                GroupBox(label: Label("Sinopsis", systemImage: "text.book.closed").foregroundColor(.green)) {
                     VStack(alignment: .leading, spacing: 8) {
                         Text(film.synopsis)
                             .font(.body)
@@ -64,12 +59,8 @@ struct FilmDetailView: View {
                     .padding(.top, 4)
                     .padding(.bottom, 2)
                 }
-                .groupBoxStyle(DefaultGroupBoxStyle())
 
-                GroupBox(
-                    label: Label("Ulasan Penonton", systemImage: "person.2.fill")
-                        .foregroundColor(.green)
-                ) {
+                GroupBox(label: Label("Ulasan Penonton", systemImage: "person.2.fill").foregroundColor(.green)) {
                     VStack(spacing: 12) {
                         ForEach(film.reviews.prefix(3)) { review in
                             VStack(alignment: .leading, spacing: 6) {
