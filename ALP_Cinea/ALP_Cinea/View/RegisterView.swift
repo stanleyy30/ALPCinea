@@ -1,0 +1,67 @@
+import SwiftUI
+
+struct RegisterView: View {
+    @State private var username = ""
+    @State private var email = ""
+    @State private var password = ""
+    @State private var confirmPassword = ""
+
+    var body: some View {
+        VStack(spacing: 24) {
+            Spacer()
+
+            Text("📝 Daftar Akun")
+                .font(.system(size: 28, weight: .bold, design: .rounded))
+                .foregroundColor(.green)
+
+            VStack(spacing: 16) {
+                TextField("Username", text: $username)
+                    .padding()
+                    .background(Color.white.opacity(0.05))
+                    .cornerRadius(12)
+                    .foregroundColor(.white)
+
+                TextField("Email", text: $email)
+                    .padding()
+                    .background(Color.white.opacity(0.05))
+                    .cornerRadius(12)
+                    .foregroundColor(.white)
+                    .autocapitalization(.none)
+
+                SecureField("Password", text: $password)
+                    .padding()
+                    .background(Color.white.opacity(0.05))
+                    .cornerRadius(12)
+                    .foregroundColor(.white)
+
+                SecureField("Konfirmasi Password", text: $confirmPassword)
+                    .padding()
+                    .background(Color.white.opacity(0.05))
+                    .cornerRadius(12)
+                    .foregroundColor(.white)
+            }
+
+            Button(action: {
+                // Action daftar
+            }) {
+                Text("Daftar")
+                    .frame(maxWidth: .infinity)
+                    .padding()
+                    .background(Color.green)
+                    .cornerRadius(12)
+                    .foregroundColor(.black)
+                    .font(.headline)
+            }
+
+            Spacer()
+        }
+        .padding()
+        .background(Color.black.ignoresSafeArea())
+        .navigationTitle("Register")
+        .navigationBarTitleDisplayMode(.inline)
+    }
+}
+
+#Preview {
+    RegisterView()
+}
