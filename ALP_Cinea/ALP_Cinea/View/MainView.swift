@@ -1,6 +1,8 @@
 import SwiftUI
 
 struct MainView: View {
+    @StateObject private var viewModel = FilmViewModel()
+
     var body: some View {
         NavigationView {
             ScrollView {
@@ -12,7 +14,7 @@ struct MainView: View {
                         .padding(.top)
                         .padding(.horizontal)
 
-                    ForEach(sampleFilms) { film in
+                    ForEach(viewModel.films) { film in
                         NavigationLink(destination: FilmDetailView(film: film)) {
                             FilmCardView(film: film)
                                 .padding(.horizontal)
@@ -30,9 +32,17 @@ struct MainView: View {
             .background(Color.black.ignoresSafeArea())
             .navigationTitle("🎥 Beranda")
             .navigationBarTitleDisplayMode(.large)
+<<<<<<< Updated upstream
             .foregroundColor(.white)
         }
         .accentColor(.green) // Untuk warna navigasi dan tombol
+=======
+            .onAppear {
+                viewModel.fetchPopularFilms()
+            }
+        }
+        .accentColor(.green)
+>>>>>>> Stashed changes
     }
 }
 

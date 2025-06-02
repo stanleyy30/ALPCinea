@@ -5,9 +5,7 @@ struct FilmCardView: View {
 
     var body: some View {
         HStack(alignment: .top, spacing: 16) {
-            Image(film.posterName)
-                .resizable()
-                .scaledToFill()
+            RemoteImageView(imageURL: film.posterName)
                 .frame(width: 100, height: 140)
                 .cornerRadius(10)
                 .shadow(radius: 4)
@@ -33,7 +31,6 @@ struct FilmCardView: View {
         .padding(.vertical, 8)
     }
 }
-
 #Preview {
     FilmCardView(film: sampleFilms[0])
 }

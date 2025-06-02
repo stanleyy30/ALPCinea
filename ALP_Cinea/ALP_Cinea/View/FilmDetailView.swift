@@ -6,12 +6,18 @@ struct FilmDetailView: View {
 
     var body: some View {
         ScrollView {
+<<<<<<< Updated upstream
             VStack(alignment: .leading, spacing: 20) {
                 // Poster
                 Image(film.posterName)
                     .resizable()
                     .aspectRatio(contentMode: .fill)
                     .frame(height: 250)
+=======
+            VStack(alignment: .leading, spacing: 24) {
+                RemoteImageView(imageURL: film.posterName)
+                    .frame(height: 240)
+>>>>>>> Stashed changes
                     .clipped()
                     .cornerRadius(12)
                     .shadow(radius: 5)
@@ -42,9 +48,14 @@ struct FilmDetailView: View {
 
                 Divider()
 
+<<<<<<< Updated upstream
                 // Sinopsis
                 GroupBox(label: Label("Sinopsis", systemImage: "text.book.closed")) {
                     VStack(alignment: .leading, spacing: 6) {
+=======
+                GroupBox(label: Label("Sinopsis", systemImage: "text.book.closed").foregroundColor(.green)) {
+                    VStack(alignment: .leading, spacing: 8) {
+>>>>>>> Stashed changes
                         Text(film.synopsis)
                             .font(.body)
                             .lineLimit(showFullSynopsis ? nil : 4)
@@ -57,7 +68,34 @@ struct FilmDetailView: View {
                                 }
                             }
                             .font(.caption)
+<<<<<<< Updated upstream
                             .foregroundColor(.blue)
+=======
+                            .foregroundColor(.green)
+                        }
+                    }
+                    .padding(.top, 4)
+                    .padding(.bottom, 2)
+                }
+
+                GroupBox(label: Label("Ulasan Penonton", systemImage: "person.2.fill").foregroundColor(.green)) {
+                    VStack(spacing: 12) {
+                        ForEach(film.reviews.prefix(3)) { review in
+                            VStack(alignment: .leading, spacing: 6) {
+                                Text(review.username)
+                                    .font(.subheadline)
+                                    .bold()
+                                    .foregroundColor(.green)
+
+                                Text("\"\(review.comment)\"")
+                                    .font(.body)
+                                    .italic()
+                                    .foregroundColor(.green)
+                            }
+                            .padding()
+                            .background(Color(.systemGray5).opacity(0.15))
+                            .cornerRadius(12)
+>>>>>>> Stashed changes
                         }
                     }
                 }
