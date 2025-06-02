@@ -6,27 +6,17 @@ struct FilmDetailView: View {
 
     var body: some View {
         ScrollView {
-<<<<<<< Updated upstream
-            VStack(alignment: .leading, spacing: 20) {
-                // Poster
-                Image(film.posterName)
-                    .resizable()
-                    .aspectRatio(contentMode: .fill)
-                    .frame(height: 250)
-=======
             VStack(alignment: .leading, spacing: 24) {
                 RemoteImageView(imageURL: film.posterName)
                     .frame(height: 240)
->>>>>>> Stashed changes
                     .clipped()
-                    .cornerRadius(12)
-                    .shadow(radius: 5)
+                    .cornerRadius(16)
+                    .shadow(color: .green.opacity(0.3), radius: 6, x: 0, y: 4)
 
-                // Title & Info
-                VStack(alignment: .leading, spacing: 8) {
+                VStack(alignment: .leading, spacing: 10) {
                     Text(film.title)
-                        .font(.title)
-                        .fontWeight(.bold)
+                        .font(.system(size: 24, weight: .bold, design: .rounded))
+                        .foregroundColor(.white)
 
                     HStack {
                         Text(film.genre)
@@ -34,30 +24,25 @@ struct FilmDetailView: View {
                         Text("⭐️ \(String(format: "%.1f", film.rating))")
                     }
                     .font(.subheadline)
-                    .foregroundColor(.gray)
+                    .foregroundColor(.green)
 
-                    HStack {
+                    HStack(spacing: 4) {
                         Image(systemName: "clock")
                         Text(film.duration)
                         Spacer()
                         Text("📺 \(film.platform)")
                     }
-                    .font(.subheadline)
-                    .foregroundColor(.secondary)
+                    .font(.footnote)
+                    .foregroundColor(.gray)
                 }
 
-                Divider()
+                Divider().background(Color.gray)
 
-<<<<<<< Updated upstream
-                // Sinopsis
-                GroupBox(label: Label("Sinopsis", systemImage: "text.book.closed")) {
-                    VStack(alignment: .leading, spacing: 6) {
-=======
                 GroupBox(label: Label("Sinopsis", systemImage: "text.book.closed").foregroundColor(.green)) {
                     VStack(alignment: .leading, spacing: 8) {
->>>>>>> Stashed changes
                         Text(film.synopsis)
                             .font(.body)
+                            .foregroundColor(.green)
                             .lineLimit(showFullSynopsis ? nil : 4)
                             .truncationMode(.tail)
 
@@ -68,9 +53,6 @@ struct FilmDetailView: View {
                                 }
                             }
                             .font(.caption)
-<<<<<<< Updated upstream
-                            .foregroundColor(.blue)
-=======
                             .foregroundColor(.green)
                         }
                     }
@@ -95,32 +77,15 @@ struct FilmDetailView: View {
                             .padding()
                             .background(Color(.systemGray5).opacity(0.15))
                             .cornerRadius(12)
->>>>>>> Stashed changes
                         }
                     }
                 }
 
-                // Ulasan
-                GroupBox(label: Label("Ulasan Penonton", systemImage: "person.2.fill")) {
-                    ForEach(film.reviews.prefix(3)) { review in
-                        VStack(alignment: .leading, spacing: 4) {
-                            Text(review.username)
-                                .font(.subheadline)
-                                .bold()
-                            Text("\"\(review.comment)\"")
-                                .italic()
-                                .font(.body)
-                        }
-                        .padding(8)
-                        .background(Color.gray.opacity(0.1))
-                        .cornerRadius(8)
-                    }
-                }
-
-                Spacer()
+                Spacer(minLength: 20)
             }
             .padding()
         }
+        .background(Color.black.ignoresSafeArea())
         .navigationTitle("Detail Film")
         .navigationBarTitleDisplayMode(.inline)
     }
