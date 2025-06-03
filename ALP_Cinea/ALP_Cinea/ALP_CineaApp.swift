@@ -4,7 +4,7 @@ import SwiftUI
 struct ALP_CineaApp: App {
     var body: some Scene {
         WindowGroup {
-            MainView()
+            LoginView()
         }
     }
 }
