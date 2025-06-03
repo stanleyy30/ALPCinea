@@ -59,6 +59,9 @@ struct LoginView: View {
             .sheet(isPresented: $viewModel.showRegister) {
                 RegisterView(viewModel: viewModel)
             }
+            .alert(isPresented: $viewModel.showAlert) {
+                Alert(title: Text("Error"), message: Text(viewModel.alertMessage), dismissButton: .default(Text("OK")))
+            }
         }
     }
 }
