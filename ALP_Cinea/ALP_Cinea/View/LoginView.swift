@@ -54,7 +54,7 @@ struct LoginView: View {
             .navigationTitle("Login")
             .navigationBarTitleDisplayMode(.inline)
             .fullScreenCover(isPresented: $viewModel.isLoggedIn) {
-                MainView()
+                MainView(viewModel: FilmViewModel())
             }
             .sheet(isPresented: $viewModel.showRegister) {
                 RegisterView(viewModel: viewModel)

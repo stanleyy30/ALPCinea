@@ -1,43 +1,18 @@
 import SwiftUI
 
 struct MainView: View {
-    @StateObject private var viewModel = FilmViewModel()
+    @ObservedObject var viewModel: FilmViewModel
 
     var body: some View {
         NavigationView {
             ScrollView {
-                VStack(alignment: .leading, spacing: 16) {
-                    Text("🎬 Rekomendasi Film")
-                        .font(.system(size: 28, weight: .bold, design: .rounded))
-                        .foregroundColor(.green)
-                        .padding(.top, 24)
-                        .padding(.horizontal)
-
-                    if viewModel.films.isEmpty {
-                        ProgressView("Memuat film...")
-                            .foregroundColor(.green)
-                            .frame(maxWidth: .infinity, alignment: .center)
-                            .padding()
-                    } else {
-                        ForEach(viewModel.films) { film in
-                            NavigationLink(destination: FilmDetailView(film: film)) {
-                                FilmCardView(film: film)
-                                    .padding(.horizontal)
-                            }
-                            .buttonStyle(PlainButtonStyle())
-                        }
-                    }
-
-                    Spacer(minLength: 32)
-                }
+                filmRecommendationsView()
             }
             .background(Color.black.ignoresSafeArea())
-            .navigationTitle("🎥 Beranda")
+            .navigationTitle("\u{1F3A5} Beranda")
             .navigationBarTitleDisplayMode(.large)
             .navigationBarItems(trailing:
-                NavigationLink(destination: BookmarkView(bookmarkedFilms: viewModel.films.filter {
-                    viewModel.user.bookmarks.contains($0.id)
-                })) {
+                NavigationLink(destination: BookmarkView(viewModel: BookmarkViewModel())) {
                     Image(systemName: "bookmark.fill")
                         .foregroundColor(.green)
                 }
@@ -48,8 +23,35 @@ struct MainView: View {
         }
         .accentColor(.green)
     }
+
+    private func filmRecommendationsView() -> some View {
+        VStack(alignment: .leading, spacing: 16) {
+            Text("\u{1F3AC} Rekomendasi Film")
+                .font(.system(size: 28, weight: .bold, design: .rounded))
+                .foregroundColor(.green)
+                .padding(.top, 24)
+                .padding(.horizontal)
+
+            if viewModel.films.isEmpty {
+                ProgressView("Memuat film...")
+                    .foregroundColor(.green)
+                    .frame(maxWidth: .infinity, alignment: .center)
+                    .padding()
+            } else {
+                ForEach(viewModel.films) { film in
+                    NavigationLink(destination: FilmDetailView(film: film, viewModel: BookmarkViewModel())) {
+                        FilmCardView(film: film)
+                            .padding(.horizontal)
+                    }
+                    .buttonStyle(PlainButtonStyle())
+                }
+            }
+
+            Spacer(minLength: 32)
+        }
+    }
 }
 
 #Preview {
-    MainView()
+    MainView(viewModel: FilmViewModel())
 }
