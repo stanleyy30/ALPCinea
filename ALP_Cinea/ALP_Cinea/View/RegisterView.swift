@@ -56,6 +56,9 @@ struct RegisterView: View {
         .background(Color.black.ignoresSafeArea())
         .navigationTitle("Register")
         .navigationBarTitleDisplayMode(.inline)
+        .alert(isPresented: $viewModel.showAlert) {
+            Alert(title: Text("Notice"), message: Text(viewModel.alertMessage), dismissButton: .default(Text("OK")))
+        }
     }
 }
 
