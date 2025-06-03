@@ -92,5 +92,18 @@ struct FilmDetailView: View {
 }
 
 #Preview {
-    FilmDetailView(film: sampleFilms[0])
+    FilmDetailView(film: Film(
+        title: "Contoh Film",
+        genre: "Drama",
+        rating: 8.3,
+        platform: "Disney+",
+        duration: "2h 15m",
+        synopsis: "Ini adalah sinopsis contoh untuk film ini...",
+        posterName: "/xGUOF1T3WmPsAcQEQJfnG7Ud9f8.jpg",
+        reviews: [
+            Review(username: "Budi", comment: "Sangat menarik dan menyentuh!"),
+            Review(username: "Sari", comment: "Ceritanya luar biasa dan penuh emosi."),
+            Review(username: "Andi", comment: "Film terbaik tahun ini menurut saya!")
+        ]
+    ))
 }

@@ -31,6 +31,20 @@ struct FilmCardView: View {
         .padding(.vertical, 8)
     }
 }
+
 #Preview {
-    FilmCardView(film: sampleFilms[0])
+    FilmCardView(film: Film(
+        title: "Contoh Film",
+        genre: "Drama",
+        rating: 7.8,
+        platform: "Netflix",
+        duration: "2 jam",
+        synopsis: "Ini sinopsis pendek...",
+        posterName: "/test.jpg",
+        reviews: []
+    ))
+    .background(Color.black)
+}
+#Preview {
+    FilmCardView(film: .init(title: "", genre: "", rating: 0, platform: "", duration: "", synopsis: "", posterName: "", reviews: []))
 }
