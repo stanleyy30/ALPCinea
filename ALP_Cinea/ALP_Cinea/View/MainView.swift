@@ -13,12 +13,19 @@ struct MainView: View {
                         .padding(.top, 24)
                         .padding(.horizontal)
 
-                    ForEach(viewModel.films) { film in
-                        NavigationLink(destination: FilmDetailView(film: film)) {
-                            FilmCardView(film: film)
-                                .padding(.horizontal)
+                    if viewModel.films.isEmpty {
+                        ProgressView("Memuat film...")
+                            .foregroundColor(.green)
+                            .frame(maxWidth: .infinity, alignment: .center)
+                            .padding()
+                    } else {
+                        ForEach(viewModel.films) { film in
+                            NavigationLink(destination: FilmDetailView(film: film)) {
+                                FilmCardView(film: film)
+                                    .padding(.horizontal)
+                            }
+                            .buttonStyle(PlainButtonStyle())
                         }
-                        .buttonStyle(PlainButtonStyle())
                     }
 
                     Spacer(minLength: 32)
