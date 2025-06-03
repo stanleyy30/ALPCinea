@@ -45,6 +45,7 @@ struct FilmCardView: View {
     ))
     .background(Color.black)
 }
+
 #Preview {
     FilmCardView(film: .init(title: "", genre: "", rating: 0, platform: "", duration: "", synopsis: "", posterName: "", reviews: []))
 }
