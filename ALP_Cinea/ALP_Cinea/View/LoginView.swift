@@ -4,12 +4,13 @@ struct LoginView: View {
     @State private var email = ""
     @State private var password = ""
     @State private var isLoggedIn = false
+    @State private var showRegister = false
 
     var body: some View {
         NavigationView {
             VStack(spacing: 24) {
                 Spacer()
-                
+
                 Text("🎬 Selamat Datang")
                     .font(.system(size: 28, weight: .bold, design: .rounded))
                     .foregroundColor(.green)
@@ -30,8 +31,9 @@ struct LoginView: View {
                 }
 
                 Button(action: {
-                    // Action login
-                    isLoggedIn = true
+                    if !email.isEmpty && !password.isEmpty {
+                        isLoggedIn = true
+                    }
                 }) {
                     Text("Login")
                         .frame(maxWidth: .infinity)
@@ -42,7 +44,9 @@ struct LoginView: View {
                         .font(.headline)
                 }
 
-                NavigationLink(destination: RegisterView()) {
+                Button(action: {
+                    showRegister = true
+                }) {
                     Text("Belum punya akun? Daftar di sini")
                         .font(.footnote)
                         .foregroundColor(.gray)
@@ -54,6 +58,12 @@ struct LoginView: View {
             .background(Color.black.ignoresSafeArea())
             .navigationTitle("Login")
             .navigationBarTitleDisplayMode(.inline)
+            .fullScreenCover(isPresented: $isLoggedIn) {
+                MainView()
+            }
+            .sheet(isPresented: $showRegister) {
+                RegisterView()
+            }
         }
     }
 }
