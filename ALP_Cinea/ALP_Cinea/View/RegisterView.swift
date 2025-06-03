@@ -50,17 +50,21 @@ struct RegisterView: View {
                     .font(.headline)
             }
 
+            Button(action: {
+                viewModel.showRegister = false
+            }) {
+                Text("Sudah punya akun? Masuk di sini")
+                    .font(.footnote)
+                    .foregroundColor(.gray)
+            }
+
             Spacer()
         }
         .padding()
         .background(Color.black.ignoresSafeArea())
-        .navigationTitle("Register")
-        .navigationBarTitleDisplayMode(.inline)
-        .alert(isPresented: $viewModel.showAlert) {
-            Alert(title: Text("Notice"), message: Text(viewModel.alertMessage), dismissButton: .default(Text("OK")))
-        }
     }
 }
+
 
 #Preview {
     RegisterView(viewModel: AuthViewModel())

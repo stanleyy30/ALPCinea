@@ -34,6 +34,14 @@ struct MainView: View {
             .background(Color.black.ignoresSafeArea())
             .navigationTitle("🎥 Beranda")
             .navigationBarTitleDisplayMode(.large)
+            .navigationBarItems(trailing:
+                NavigationLink(destination: BookmarkView(bookmarkedFilms: viewModel.films.filter {
+                    viewModel.user.bookmarks.contains($0.id)
+                })) {
+                    Image(systemName: "bookmark.fill")
+                        .foregroundColor(.green)
+                }
+            )
             .onAppear {
                 viewModel.fetchPopularFilms()
             }

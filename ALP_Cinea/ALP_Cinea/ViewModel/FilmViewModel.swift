@@ -2,6 +2,7 @@ import Foundation
 
 class FilmViewModel: ObservableObject {
     @Published var films: [Film] = []
+    @Published var user = User()
 
     private let apiKey = "8e48742aa162dd912bed5c9bf4dddddc"
 

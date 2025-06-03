@@ -1,67 +1,111 @@
 import Foundation
+import FirebaseAuth
+import FirebaseFirestore
 
 class AuthViewModel: ObservableObject {
+    // MARK: - Published Properties
     @Published var user = User()
     @Published var isLoggedIn = false
     @Published var showRegister = false
     @Published var showAlert = false
     @Published var alertMessage = ""
-    
+
+    // MARK: - Firebase Reference
+    private let db = Firestore.firestore()
+
+    // MARK: - Login Function
     func login() {
         if user.email.isEmpty || user.password.isEmpty {
             alertMessage = "Please fill in both email and password."
             showAlert = true
             return
         }
-        
-        if !isValidEmail(user.email) {
-            alertMessage = "Please enter a valid email address."
-            showAlert = true
-            return
-        }
-        
-        if user.email == "user@example.com" && user.password == "password123" {
-            isLoggedIn = true
-        } else {
-            alertMessage = "Invalid email or password."
-            showAlert = true
+
+        Auth.auth().signIn(withEmail: user.email, password: user.password) { result, error in
+            DispatchQueue.main.async {
+                if let error = error {
+                    self.alertMessage = error.localizedDescription
+                    self.showAlert = true
+                } else {
+                    self.isLoggedIn = true
+                }
+            }
         }
     }
-    
+
+    // MARK: - Register Function
     func register() {
         if user.username.isEmpty || user.email.isEmpty || user.password.isEmpty || user.confirmPassword.isEmpty {
             alertMessage = "All fields are required."
             showAlert = true
             return
         }
-        
+
         if !isValidEmail(user.email) {
             alertMessage = "Please enter a valid email address."
             showAlert = true
             return
         }
-        
-        if user.password.count < 6 {
-            alertMessage = "Password must be at least 6 characters."
-            showAlert = true
-            return
-        }
-        
+
         if user.password != user.confirmPassword {
             alertMessage = "Passwords do not match."
             showAlert = true
             return
         }
-        
-        alertMessage = "Registration successful! You can now login."
-        showAlert = true
-        showRegister = false
-        user = User()
+
+        if user.password.count < 6 {
+            alertMessage = "Password must be at least 6 characters long."
+            showAlert = true
+            return
+        }
+
+        Auth.auth().createUser(withEmail: user.email, password: user.password) { result, error in
+            DispatchQueue.main.async {
+                if let error = error {
+                    self.alertMessage = error.localizedDescription
+                    self.showAlert = true
+                    return
+                }
+
+                guard let uid = result?.user.uid else {
+                    self.alertMessage = "Failed to get user ID."
+                    self.showAlert = true
+                    return
+                }
+
+                // MARK: - Save User Info to Firestore
+                let userData: [String: Any] = [
+                    "username": self.user.username,
+                    "email": self.user.email
+                ]
+
+                self.db.collection("users").document(uid).setData(userData) { error in
+                    if let error = error {
+                        self.alertMessage = "Failed to save user data: \(error.localizedDescription)"
+                        self.showAlert = true
+                    } else {
+                        self.isLoggedIn = true
+                    }
+                }
+            }
+        }
     }
 
+    // MARK: - Email Validation
     private func isValidEmail(_ email: String) -> Bool {
-        let emailFormat = "[A-Z0-9a-z._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,}"
-        let emailPredicate = NSPredicate(format:"SELF MATCHES %@", emailFormat)
-        return emailPredicate.evaluate(with: email)
+        let emailRegEx =
+        "(?:[a-zA-Z0-9!#$%\\&'*+/=?^_`{|}~-]+(?:\\." +
+        "[a-zA-Z0-9!#$%\\&'*+/=?^_`{|}~-]+)*|\"" +
+        "(?:[\\x01-\\x08\\x0b\\x0c\\x0e-\\x1f\\x21\\x23-" +
+        "\\x5b\\x5d-\\x7f]|\\\\[\\x01-\\x09\\x0b\\x0c\\" +
+        "x0e-\\x7f])*\")@(?:(?:[a-zA-Z0-9](?:[a-zA-Z0-9-" +
+        "]*[a-zA-Z0-9])?\\.)+[a-zA-Z]{2,}|" +
+        "\\[(?:(2(5[0-5]|[0-4]\\d)|1\\d{2}|[1-9]?\\d))\\." +
+        "(?:(2(5[0-5]|[0-4]\\d)|1\\d{2}|[1-9]?\\d))\\." +
+        "(?:(2(5[0-5]|[0-4]\\d)|1\\d{2}|[1-9]?\\d))\\." +
+        "(?:(2(5[0-5]|[0-4]\\d)|1\\d{2}|[1-9]?\\d))\\])"
+
+        let emailPred = NSPredicate(format:"SELF MATCHES %@", emailRegEx)
+        return emailPred.evaluate(with: email)
     }
 }
