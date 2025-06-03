@@ -5,42 +5,46 @@ struct FilmCardView: View {
 
     var body: some View {
         HStack(alignment: .top, spacing: 16) {
-            Image(film.posterName)
-                .resizable()
-                .scaledToFill()
+            RemoteImageView(imageURL: film.posterName)
                 .frame(width: 100, height: 140)
-                .cornerRadius(12)
-                .shadow(radius: 5)
+                .cornerRadius(10)
+                .shadow(radius: 4)
 
-            VStack(alignment: .leading, spacing: 6) {
+            VStack(alignment: .leading, spacing: 8) {
                 Text(film.title)
                     .font(.headline)
-                    .foregroundColor(.white)
-
                 Text(film.genre)
                     .font(.subheadline)
-                    .foregroundColor(.green)
-
+                    .foregroundColor(.secondary)
                 Text("⭐️ \(String(format: "%.1f", film.rating)) • \(film.platform)")
                     .font(.caption)
                     .foregroundColor(.gray)
-
                 Text(film.duration)
                     .font(.caption2)
                     .foregroundColor(.gray)
-                    .padding(.top, 2)
+                    .padding(.top, 4)
             }
 
             Spacer()
         }
-        .padding()
-        .background(Color.white.opacity(0.05))
-        .cornerRadius(16)
-        .shadow(color: .green.opacity(0.25), radius: 6, x: 0, y: 4)
+        .padding(.horizontal)
+        .padding(.vertical, 8)
     }
 }
 
 #Preview {
-    FilmCardView(film: sampleFilms[0])
-        .background(Color.black)
+    FilmCardView(film: Film(
+        title: "Contoh Film",
+        genre: "Drama",
+        rating: 7.8,
+        platform: "Netflix",
+        duration: "2 jam",
+        synopsis: "Ini sinopsis pendek...",
+        posterName: "/test.jpg",
+        reviews: []
+    ))
+    .background(Color.black)
+}
+#Preview {
+    FilmCardView(film: .init(title: "", genre: "", rating: 0, platform: "", duration: "", synopsis: "", posterName: "", reviews: []))
 }

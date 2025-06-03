@@ -1,28 +1,26 @@
 import SwiftUI
 
 struct LoginView: View {
-    @State private var email = ""
-    @State private var password = ""
-    @State private var isLoggedIn = false
+    @StateObject private var viewModel = AuthViewModel()
 
     var body: some View {
         NavigationView {
             VStack(spacing: 24) {
                 Spacer()
-                
+
                 Text("🎬 Selamat Datang")
                     .font(.system(size: 28, weight: .bold, design: .rounded))
                     .foregroundColor(.green)
 
                 VStack(spacing: 16) {
-                    TextField("Email", text: $email)
+                    TextField("Email", text: $viewModel.user.email)
                         .padding()
                         .background(Color.white.opacity(0.05))
                         .cornerRadius(12)
                         .foregroundColor(.white)
                         .autocapitalization(.none)
 
-                    SecureField("Password", text: $password)
+                    SecureField("Password", text: $viewModel.user.password)
                         .padding()
                         .background(Color.white.opacity(0.05))
                         .cornerRadius(12)
@@ -30,8 +28,7 @@ struct LoginView: View {
                 }
 
                 Button(action: {
-                    // Action login
-                    isLoggedIn = true
+                    viewModel.login()
                 }) {
                     Text("Login")
                         .frame(maxWidth: .infinity)
@@ -42,7 +39,9 @@ struct LoginView: View {
                         .font(.headline)
                 }
 
-                NavigationLink(destination: RegisterView()) {
+                Button(action: {
+                    viewModel.showRegister = true
+                }) {
                     Text("Belum punya akun? Daftar di sini")
                         .font(.footnote)
                         .foregroundColor(.gray)
@@ -54,6 +53,12 @@ struct LoginView: View {
             .background(Color.black.ignoresSafeArea())
             .navigationTitle("Login")
             .navigationBarTitleDisplayMode(.inline)
+            .fullScreenCover(isPresented: $viewModel.isLoggedIn) {
+                MainView()
+            }
+            .sheet(isPresented: $viewModel.showRegister) {
+                RegisterView(viewModel: viewModel)
+            }
         }
     }
 }

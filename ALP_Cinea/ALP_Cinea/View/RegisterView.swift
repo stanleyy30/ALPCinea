@@ -1,10 +1,7 @@
 import SwiftUI
 
 struct RegisterView: View {
-    @State private var username = ""
-    @State private var email = ""
-    @State private var password = ""
-    @State private var confirmPassword = ""
+    @ObservedObject var viewModel: AuthViewModel
 
     var body: some View {
         VStack(spacing: 24) {
@@ -15,26 +12,26 @@ struct RegisterView: View {
                 .foregroundColor(.green)
 
             VStack(spacing: 16) {
-                TextField("Username", text: $username)
+                TextField("Username", text: $viewModel.user.username)
                     .padding()
                     .background(Color.white.opacity(0.05))
                     .cornerRadius(12)
                     .foregroundColor(.white)
 
-                TextField("Email", text: $email)
+                TextField("Email", text: $viewModel.user.email)
                     .padding()
                     .background(Color.white.opacity(0.05))
                     .cornerRadius(12)
                     .foregroundColor(.white)
                     .autocapitalization(.none)
 
-                SecureField("Password", text: $password)
+                SecureField("Password", text: $viewModel.user.password)
                     .padding()
                     .background(Color.white.opacity(0.05))
                     .cornerRadius(12)
                     .foregroundColor(.white)
 
-                SecureField("Konfirmasi Password", text: $confirmPassword)
+                SecureField("Konfirmasi Password", text: $viewModel.user.confirmPassword)
                     .padding()
                     .background(Color.white.opacity(0.05))
                     .cornerRadius(12)
@@ -42,7 +39,7 @@ struct RegisterView: View {
             }
 
             Button(action: {
-                // Action daftar
+                viewModel.register()
             }) {
                 Text("Daftar")
                     .frame(maxWidth: .infinity)
@@ -63,5 +60,5 @@ struct RegisterView: View {
 }
 
 #Preview {
-    RegisterView()
+    RegisterView(viewModel: AuthViewModel())
 }

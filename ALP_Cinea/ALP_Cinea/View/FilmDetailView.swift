@@ -19,7 +19,7 @@ struct FilmDetailView: View {
                         .foregroundColor(.white)
 
                     HStack {
-                        Text(film.genre)
+                        Text(film.genre.isEmpty ? "Genre tidak diketahui" : film.genre)
                         Spacer()
                         Text("⭐️ \(String(format: "%.1f", film.rating))")
                     }
@@ -28,7 +28,7 @@ struct FilmDetailView: View {
 
                     HStack(spacing: 4) {
                         Image(systemName: "clock")
-                        Text(film.duration)
+                        Text(film.duration.isEmpty ? "Durasi tidak tersedia" : film.duration)
                         Spacer()
                         Text("📺 \(film.platform)")
                     }
@@ -40,13 +40,13 @@ struct FilmDetailView: View {
 
                 GroupBox(label: Label("Sinopsis", systemImage: "text.book.closed").foregroundColor(.green)) {
                     VStack(alignment: .leading, spacing: 8) {
-                        Text(film.synopsis)
+                        Text(film.synopsis.isEmpty ? "Sinopsis tidak tersedia." : film.synopsis)
                             .font(.body)
                             .foregroundColor(.green)
                             .lineLimit(showFullSynopsis ? nil : 4)
                             .truncationMode(.tail)
 
-                        if !showFullSynopsis {
+                        if !showFullSynopsis && !film.synopsis.isEmpty {
                             Button("Selengkapnya...") {
                                 withAnimation {
                                     showFullSynopsis.toggle()
@@ -61,22 +61,29 @@ struct FilmDetailView: View {
                 }
 
                 GroupBox(label: Label("Ulasan Penonton", systemImage: "person.2.fill").foregroundColor(.green)) {
-                    VStack(spacing: 12) {
-                        ForEach(film.reviews.prefix(3)) { review in
-                            VStack(alignment: .leading, spacing: 6) {
-                                Text(review.username)
-                                    .font(.subheadline)
-                                    .bold()
-                                    .foregroundColor(.green)
-
-                                Text("\"\(review.comment)\"")
-                                    .font(.body)
-                                    .italic()
-                                    .foregroundColor(.green)
-                            }
+                    if film.reviews.isEmpty {
+                        Text("Belum ada ulasan.")
+                            .font(.subheadline)
+                            .foregroundColor(.gray)
                             .padding()
-                            .background(Color(.systemGray5).opacity(0.15))
-                            .cornerRadius(12)
+                    } else {
+                        VStack(spacing: 12) {
+                            ForEach(film.reviews.prefix(3)) { review in
+                                VStack(alignment: .leading, spacing: 6) {
+                                    Text(review.username)
+                                        .font(.subheadline)
+                                        .bold()
+                                        .foregroundColor(.green)
+
+                                    Text("\"\(review.comment)\"")
+                                        .font(.body)
+                                        .italic()
+                                        .foregroundColor(.green)
+                                }
+                                .padding()
+                                .background(Color(.systemGray5).opacity(0.15))
+                                .cornerRadius(12)
+                            }
                         }
                     }
                 }
@@ -85,12 +92,28 @@ struct FilmDetailView: View {
             }
             .padding()
         }
-        .background(Color.black.ignoresSafeArea())
+        .background(
+            LinearGradient(gradient: Gradient(colors: [.black, .gray.opacity(0.2)]), startPoint: .top, endPoint: .bottom)
+                .ignoresSafeArea()
+        )
         .navigationTitle("Detail Film")
         .navigationBarTitleDisplayMode(.inline)
     }
 }
 
 #Preview {
-    FilmDetailView(film: sampleFilms[0])
+    FilmDetailView(film: Film(
+        title: "Contoh Film",
+        genre: "Drama",
+        rating: 8.3,
+        platform: "Disney+",
+        duration: "2h 15m",
+        synopsis: "Ini adalah sinopsis contoh untuk film ini...",
+        posterName: "/xGUOF1T3WmPsAcQEQJfnG7Ud9f8.jpg",
+        reviews: [
+            Review(username: "Budi", comment: "Sangat menarik dan menyentuh!"),
+            Review(username: "Sari", comment: "Ceritanya luar biasa dan penuh emosi."),
+            Review(username: "Andi", comment: "Film terbaik tahun ini menurut saya!")
+        ]
+    ))
 }
