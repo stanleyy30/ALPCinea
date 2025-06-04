@@ -63,4 +63,3 @@ final class BookmarkViewModelTests: XCTestCase {
         XCTAssertFalse(viewModel.isBookmarked(sampleFilm))
     }
 }
-
