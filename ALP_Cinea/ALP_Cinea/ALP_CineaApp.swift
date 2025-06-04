@@ -3,8 +3,9 @@ import Firebase
 
 @main
 struct ALP_CineaApp: App {
-    @StateObject var viewModel = FilmViewModel()
-    
+    @StateObject var filmViewModel = FilmViewModel()
+    @StateObject var bookmarkViewModel = BookmarkViewModel()
+
     init() {
         FirebaseApp.configure()
     }
@@ -12,7 +13,8 @@ struct ALP_CineaApp: App {
     var body: some Scene {
         WindowGroup {
             LoginView()
-                .environmentObject(viewModel)
+                .environmentObject(filmViewModel)
+                .environmentObject(bookmarkViewModel)
         }
     }
 }

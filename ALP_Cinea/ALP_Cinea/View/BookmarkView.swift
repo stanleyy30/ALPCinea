@@ -7,12 +7,15 @@ struct BookmarkView: View {
         ScrollView {
             contentView
                 .padding(.top)
-                .frame(maxWidth: .infinity) 
+                .frame(maxWidth: .infinity)
                 .background(Color.black)
         }
         .background(Color.black.ignoresSafeArea())
         .navigationTitle("Bookmark")
         .navigationBarTitleDisplayMode(.inline)
+        .onAppear {
+            viewModel.loadBookmarks()
+        }
     }
 
     private var contentView: some View {
@@ -52,7 +55,6 @@ struct BookmarkView: View {
         }
     }
 }
-
 
 #Preview {
     let viewModel = BookmarkViewModel()

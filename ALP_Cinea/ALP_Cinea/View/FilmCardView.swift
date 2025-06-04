@@ -13,7 +13,7 @@ struct FilmCardView: View {
             VStack(alignment: .leading, spacing: 8) {
                 Text(film.title)
                     .font(.headline)
-                Text(film.genre)
+                Text(film.genres.joined(separator: ", "))
                     .font(.subheadline)
                     .foregroundColor(.secondary)
                 Text("⭐️ \(String(format: "%.1f", film.rating)) • \(film.platform)")
@@ -35,17 +35,12 @@ struct FilmCardView: View {
 #Preview {
     FilmCardView(film: Film(
         title: "Contoh Film",
-        genre: "Drama",
+        genres: ["Drama"],
         rating: 7.8,
         platform: "Netflix",
         duration: "2 jam",
         synopsis: "Ini sinopsis pendek...",
         posterName: "/test.jpg",
         reviews: []
-    ))
-    .background(Color.black)
-}
-
-#Preview {
-    FilmCardView(film: .init(title: "", genre: "", rating: 0, platform: "", duration: "", synopsis: "", posterName: "", reviews: []))
+    ))    .background(Color.black)
 }
