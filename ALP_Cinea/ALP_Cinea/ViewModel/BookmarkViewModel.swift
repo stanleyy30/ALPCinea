@@ -36,12 +36,13 @@ class BookmarkViewModel: ObservableObject {
                 let data = doc.data()
                 return Film(
                     title: data["title"] as? String ?? "",
-                    genres: data["genres"] as? [String] ?? [],                    rating: data["rating"] as? Double ?? 0.0,
+                    genres: data["genres"] as? [String] ?? [],
+                    rating: data["rating"] as? Double ?? 0.0,
                     platform: data["platform"] as? String ?? "",
                     duration: data["duration"] as? String ?? "",
                     synopsis: data["synopsis"] as? String ?? "",
                     posterName: data["posterName"] as? String ?? "",
-                    reviews: [] // Kosong dulu
+                    reviews: []
                 )
             } ?? []
         }

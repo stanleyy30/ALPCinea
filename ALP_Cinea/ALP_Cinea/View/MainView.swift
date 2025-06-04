@@ -4,7 +4,6 @@ struct MainView: View {
     @ObservedObject var viewModel: FilmViewModel
     @State private var showProfile = false
 
-    // 🔍 Search & Filter
     @State private var searchText = ""
     @State private var selectedGenre: String = "Semua"
 
@@ -32,14 +31,12 @@ struct MainView: View {
                 .padding(.top)
                 .padding(.horizontal)
 
-                // 🔍 Search Bar
                 TextField("Cari film...", text: $searchText)
                     .padding(10)
                     .background(Color.white.opacity(0.1))
                     .cornerRadius(10)
                     .padding(.horizontal)
 
-                // 🎯 Genre Filter Picker
                 ScrollView(.horizontal, showsIndicators: false) {
                     HStack {
                         GenreButton(title: "Semua", selected: $selectedGenre)
@@ -51,7 +48,6 @@ struct MainView: View {
                 }
                 .padding(.vertical, 5)
 
-                // 🎬 Film List
                 ScrollView {
                     filmRecommendationsView()
                 }
