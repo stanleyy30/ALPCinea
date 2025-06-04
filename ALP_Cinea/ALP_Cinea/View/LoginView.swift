@@ -41,14 +41,6 @@ struct LoginView: View {
                 }
 
                 Button(action: {
-                    showResetPassword = true
-                }) {
-                    Text("Lupa password?")
-                        .font(.footnote)
-                        .foregroundColor(.gray)
-                }
-
-                Button(action: {
                     viewModel.showRegister = true
                 }) {
                     Text("Belum punya akun? Daftar di sini")
@@ -63,13 +55,10 @@ struct LoginView: View {
             .navigationTitle("Login")
             .navigationBarTitleDisplayMode(.inline)
             .fullScreenCover(isPresented: $viewModel.isLoggedIn) {
-                MainView(viewModel: FilmViewModel())
+                HomeTabView()
             }
             .sheet(isPresented: $viewModel.showRegister) {
                 RegisterView(viewModel: viewModel)
-            }
-            .sheet(isPresented: $showResetPassword) {
-                ForgotPasswordView(viewModel: viewModel)
             }
             .alert(isPresented: $viewModel.showAlert) {
                 Alert(title: Text("Error"), message: Text(viewModel.alertMessage), dismissButton: .default(Text("OK")))

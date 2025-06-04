@@ -2,7 +2,6 @@ import SwiftUI
 
 struct MainView: View {
     @ObservedObject var viewModel: FilmViewModel
-    @StateObject private var profileViewModel = ProfileViewModel()
     @State private var showProfile = false
 
     // 🔍 Search & Filter
@@ -22,15 +21,6 @@ struct MainView: View {
             VStack(alignment: .leading, spacing: 0) {
                 HStack {
                     Spacer()
-                    Button(action: {
-                        showProfile = true
-                    }) {
-                        Image(systemName: "person.circle.fill")
-                            .resizable()
-                            .frame(width: 30, height: 30)
-                            .foregroundColor(.white)
-                    }
-                    .padding(.trailing, 8)
 
                     NavigationLink(destination: BookmarkView(viewModel: BookmarkViewModel())) {
                         Image(systemName: "bookmark.fill")
@@ -67,9 +57,6 @@ struct MainView: View {
                 }
 
                 Spacer()
-            }
-            .sheet(isPresented: $showProfile) {
-                ProfileView(viewModel: profileViewModel)
             }
             .background(Color.black.ignoresSafeArea())
             .navigationBarHidden(true)
