@@ -9,7 +9,6 @@ struct FilmDetailView: View {
         ScrollView {
             VStack(spacing: 24) {
 
-                // Poster
                 if let imageURL = URL(string: "https://image.tmdb.org/t/p/w500\(film.posterName)") {
                     AsyncImage(url: imageURL) { image in
                         image
@@ -26,7 +25,6 @@ struct FilmDetailView: View {
                     .padding(.horizontal)
                 }
 
-                // Judul dan info dasar
                 VStack(alignment: .leading, spacing: 12) {
                     Text(film.title)
                         .font(.title)
@@ -55,7 +53,6 @@ struct FilmDetailView: View {
                 }
                 .padding(.horizontal)
 
-                // Sinopsis
                 VStack(alignment: .leading, spacing: 8) {
                     Text("Sinopsis")
                         .font(.headline)
@@ -78,7 +75,6 @@ struct FilmDetailView: View {
                 }
                 .padding(.horizontal)
 
-                // Ulasan
                 if !film.reviews.isEmpty {
                     VStack(alignment: .leading, spacing: 12) {
                         Text("Ulasan")
@@ -108,7 +104,6 @@ struct FilmDetailView: View {
                     .padding(.horizontal)
                 }
 
-                // Tombol Bookmark
                 Button(action: {
                     viewModel.toggleBookmark(for: film)
                 }) {

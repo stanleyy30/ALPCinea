@@ -88,38 +88,6 @@ class AuthViewModel: ObservableObject {
         }
     }
 
-    func resetPassword(newPassword: String, confirmPassword: String) {
-        guard !newPassword.isEmpty && !confirmPassword.isEmpty else {
-            alertMessage = "Isi semua kolom."
-            showAlert = true
-            return
-        }
-
-        guard newPassword == confirmPassword else {
-            alertMessage = "Password tidak cocok."
-            showAlert = true
-            return
-        }
-
-        guard newPassword.count >= 6 else {
-            alertMessage = "Password minimal 6 karakter."
-            showAlert = true
-            return
-        }
-
-        Auth.auth().currentUser?.updatePassword(to: newPassword) { error in
-            if let error = error {
-                self.alertMessage = error.localizedDescription
-                self.showAlert = true
-            } else {
-                self.alertMessage = "Password berhasil diubah."
-                self.showAlert = true
-                self.showResetPassword = false
-            }
-        }
-    }
-
-
     private func isValidEmail(_ email: String) -> Bool {
         let emailRegEx =
         "(?:[a-zA-Z0-9!#$%\\&'*+/=?^_`{|}~-]+(?:\\." +

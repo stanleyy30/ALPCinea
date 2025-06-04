@@ -2,10 +2,8 @@ import SwiftUI
 
 struct MainView: View {
     @ObservedObject var viewModel: FilmViewModel
-    @StateObject private var profileViewModel = ProfileViewModel()
     @State private var showProfile = false
 
-    // 🔍 Search & Filter
     @State private var searchText = ""
     @State private var selectedGenre: String = "Semua"
 
@@ -22,15 +20,6 @@ struct MainView: View {
             VStack(alignment: .leading, spacing: 0) {
                 HStack {
                     Spacer()
-                    Button(action: {
-                        showProfile = true
-                    }) {
-                        Image(systemName: "person.circle.fill")
-                            .resizable()
-                            .frame(width: 30, height: 30)
-                            .foregroundColor(.white)
-                    }
-                    .padding(.trailing, 8)
 
                     NavigationLink(destination: BookmarkView(viewModel: BookmarkViewModel())) {
                         Image(systemName: "bookmark.fill")
@@ -42,14 +31,12 @@ struct MainView: View {
                 .padding(.top)
                 .padding(.horizontal)
 
-                // 🔍 Search Bar
                 TextField("Cari film...", text: $searchText)
                     .padding(10)
                     .background(Color.white.opacity(0.1))
                     .cornerRadius(10)
                     .padding(.horizontal)
 
-                // 🎯 Genre Filter Picker
                 ScrollView(.horizontal, showsIndicators: false) {
                     HStack {
                         GenreButton(title: "Semua", selected: $selectedGenre)
@@ -61,15 +48,11 @@ struct MainView: View {
                 }
                 .padding(.vertical, 5)
 
-                // 🎬 Film List
                 ScrollView {
                     filmRecommendationsView()
                 }
 
                 Spacer()
-            }
-            .sheet(isPresented: $showProfile) {
-                ProfileView(viewModel: profileViewModel)
             }
             .background(Color.black.ignoresSafeArea())
             .navigationBarHidden(true)
