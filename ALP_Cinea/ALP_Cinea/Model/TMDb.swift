@@ -10,4 +10,5 @@ struct TMDbMovie: Codable, Identifiable {
     let overview: String
     let vote_average: Double
     let poster_path: String?
+    let genre_ids: [Int]
 }

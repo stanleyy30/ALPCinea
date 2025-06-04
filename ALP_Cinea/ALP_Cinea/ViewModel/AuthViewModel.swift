@@ -81,6 +81,7 @@ class AuthViewModel: ObservableObject {
                         self.showAlert = true
                     } else {
                         self.isLoggedIn = true
+                        BookmarkViewModel().loadBookmarks()
                     }
                 }
             }
