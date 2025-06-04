@@ -1,17 +1,20 @@
-//
-//  ALP_Cinea_IPADApp.swift
-//  ALP_Cinea_IPAD
-//
-//  Created by Michael Laiman on 05/06/25.
-//
-
 import SwiftUI
+import Firebase
 
 @main
-struct ALP_Cinea_IPADApp: App {
+struct ALP_CineaApp: App {
+    @StateObject var filmViewModel = FilmViewModel()
+    @StateObject var bookmarkViewModel = BookmarkViewModel()
+
+    init() {
+        FirebaseApp.configure()
+    }
+
     var body: some Scene {
         WindowGroup {
-            ContentView()
+            LoginView()
+                .environmentObject(filmViewModel)
+                .environmentObject(bookmarkViewModel)
         }
     }
 }
