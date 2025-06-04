@@ -73,6 +73,7 @@ class BookmarkViewModel: ObservableObject {
             }
         }
     }
+    
     private func removeBookmark(_ film: Film) {
         guard let userId = userId else { return }
 
