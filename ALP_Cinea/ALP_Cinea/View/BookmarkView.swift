@@ -7,6 +7,8 @@ struct BookmarkView: View {
         ScrollView {
             contentView
                 .padding(.top)
+                .frame(maxWidth: .infinity) 
+                .background(Color.black)
         }
         .background(Color.black.ignoresSafeArea())
         .navigationTitle("Bookmark")
@@ -23,6 +25,7 @@ struct BookmarkView: View {
                 filmListView
             }
         }
+        .frame(maxWidth: .infinity, alignment: .leading)
     }
 
     private var headerView: some View {
@@ -36,6 +39,7 @@ struct BookmarkView: View {
         Text("Belum ada film yang dibookmark.")
             .foregroundColor(.gray)
             .padding()
+            .frame(maxWidth: .infinity, alignment: .center)
     }
 
     private var filmListView: some View {
@@ -52,6 +56,7 @@ struct BookmarkView: View {
 
 #Preview {
     let viewModel = BookmarkViewModel()
-    viewModel.bookmarkedFilms = sampleFilms
-    return BookmarkView(viewModel: viewModel)
+    return NavigationView {
+        BookmarkView(viewModel: viewModel)
+    }
 }

@@ -11,3 +11,4 @@ struct Film: Identifiable {
     let posterName: String
     let reviews: [Review]
 }
+

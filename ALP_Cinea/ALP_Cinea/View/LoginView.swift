@@ -2,6 +2,7 @@ import SwiftUI
 
 struct LoginView: View {
     @StateObject private var viewModel = AuthViewModel()
+    @State private var showResetPassword = false
 
     var body: some View {
         NavigationView {
@@ -40,6 +41,14 @@ struct LoginView: View {
                 }
 
                 Button(action: {
+                    showResetPassword = true
+                }) {
+                    Text("Lupa password?")
+                        .font(.footnote)
+                        .foregroundColor(.gray)
+                }
+
+                Button(action: {
                     viewModel.showRegister = true
                 }) {
                     Text("Belum punya akun? Daftar di sini")
@@ -58,6 +67,9 @@ struct LoginView: View {
             }
             .sheet(isPresented: $viewModel.showRegister) {
                 RegisterView(viewModel: viewModel)
+            }
+            .sheet(isPresented: $showResetPassword) {
+                ForgotPasswordView(viewModel: viewModel)
             }
             .alert(isPresented: $viewModel.showAlert) {
                 Alert(title: Text("Error"), message: Text(viewModel.alertMessage), dismissButton: .default(Text("OK")))

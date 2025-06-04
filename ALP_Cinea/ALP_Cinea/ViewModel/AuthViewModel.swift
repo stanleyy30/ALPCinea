@@ -3,17 +3,15 @@ import FirebaseAuth
 import FirebaseFirestore
 
 class AuthViewModel: ObservableObject {
-    // MARK: - Published Properties
     @Published var user = User()
     @Published var isLoggedIn = false
     @Published var showRegister = false
     @Published var showAlert = false
     @Published var alertMessage = ""
+    @Published var showResetPassword = false
 
-    // MARK: - Firebase Reference
     private let db = Firestore.firestore()
 
-    // MARK: - Login Function
     func login() {
         if user.email.isEmpty || user.password.isEmpty {
             alertMessage = "Please fill in both email and password."
@@ -33,7 +31,6 @@ class AuthViewModel: ObservableObject {
         }
     }
 
-    // MARK: - Register Function
     func register() {
         if user.username.isEmpty || user.email.isEmpty || user.password.isEmpty || user.confirmPassword.isEmpty {
             alertMessage = "All fields are required."
@@ -73,7 +70,6 @@ class AuthViewModel: ObservableObject {
                     return
                 }
 
-                // MARK: - Save User Info to Firestore
                 let userData: [String: Any] = [
                     "username": self.user.username,
                     "email": self.user.email
@@ -91,7 +87,38 @@ class AuthViewModel: ObservableObject {
         }
     }
 
-    // MARK: - Email Validation
+    func resetPassword(newPassword: String, confirmPassword: String) {
+        guard !newPassword.isEmpty && !confirmPassword.isEmpty else {
+            alertMessage = "Isi semua kolom."
+            showAlert = true
+            return
+        }
+
+        guard newPassword == confirmPassword else {
+            alertMessage = "Password tidak cocok."
+            showAlert = true
+            return
+        }
+
+        guard newPassword.count >= 6 else {
+            alertMessage = "Password minimal 6 karakter."
+            showAlert = true
+            return
+        }
+
+        Auth.auth().currentUser?.updatePassword(to: newPassword) { error in
+            if let error = error {
+                self.alertMessage = error.localizedDescription
+                self.showAlert = true
+            } else {
+                self.alertMessage = "Password berhasil diubah."
+                self.showAlert = true
+                self.showResetPassword = false
+            }
+        }
+    }
+
+
     private func isValidEmail(_ email: String) -> Bool {
         let emailRegEx =
         "(?:[a-zA-Z0-9!#$%\\&'*+/=?^_`{|}~-]+(?:\\." +
