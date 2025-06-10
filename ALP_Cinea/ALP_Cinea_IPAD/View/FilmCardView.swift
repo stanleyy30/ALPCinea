@@ -2,52 +2,195 @@ import SwiftUI
 
 struct FilmCardView: View {
     let film: Film
-    @Environment(\.horizontalSizeClass) var horizontalSizeClass
 
     var body: some View {
-        HStack(alignment: .top, spacing: isIpad ? 24 : 16) {
-            RemoteImageView(imageURL: film.posterName)
-                .frame(width: isIpad ? 160 : 100, height: isIpad ? 224 : 140)
-                .cornerRadius(10)
-                .shadow(radius: 4)
+        HStack(alignment: .top, spacing: 16) {
+            posterSection
+            detailSection
+        }
+        .padding(.horizontal, 20)
+        .padding(.vertical, 16)
+        .background(
+            RoundedRectangle(cornerRadius: 16)
+                .fill(
+                    LinearGradient(
+                        colors: [Color.white.opacity(0.05), Color.white.opacity(0.02)],
+                        startPoint: .topLeading,
+                        endPoint: .bottomTrailing
+                    )
+                )
+                .overlay(
+                    RoundedRectangle(cornerRadius: 16)
+                        .stroke(Color.white.opacity(0.1), lineWidth: 1)
+                )
+        )
+        .contentShape(Rectangle())
+        .frame(maxWidth: 700) 
+    }
 
-            VStack(alignment: .leading, spacing: isIpad ? 12 : 8) {
+    private var posterSection: some View {
+        ZStack {
+            RemoteImageView(imageURL: film.posterName)
+                .frame(width: 110, height: 160)
+                .cornerRadius(12)
+                .shadow(color: .black.opacity(0.3), radius: 8, x: 0, y: 4)
+
+            VStack {
+                HStack {
+                    Spacer()
+                    ratingBadge
+                }
+                Spacer()
+                HStack {
+                    platformBadge
+                    Spacer()
+                }
+            }
+            .padding(8)
+        }
+    }
+
+    private var detailSection: some View {
+        VStack(alignment: .leading, spacing: 12) {
+            VStack(alignment: .leading, spacing: 4) {
                 Text(film.title)
-                    .font(isIpad ? .title3 : .headline)
-                Text(film.genres.joined(separator: ", "))
-                    .font(isIpad ? .body : .subheadline)
-                    .foregroundColor(.secondary)
-                Text("⭐️ \(String(format: "%.1f", film.rating)) • \(film.platform)")
-                    .font(isIpad ? .callout : .caption)
+                    .font(.system(size: 18, weight: .bold))
+                    .foregroundColor(.white)
+                    .lineLimit(2)
+                Text(film.genres.joined(separator: " • "))
+                    .font(.system(size: 14, weight: .medium))
                     .foregroundColor(.gray)
-                Text(film.duration)
-                    .font(isIpad ? .footnote : .caption2)
-                    .foregroundColor(.gray)
-                    .padding(.top, isIpad ? 8 : 4)
+                    .lineLimit(1)
+            }
+
+            HStack(spacing: 16) {
+                ratingRow
+                durationRow
+                Spacer()
+            }
+
+            if !film.synopsis.isEmpty {
+                Text(film.synopsis)
+                    .font(.system(size: 13))
+                    .foregroundColor(.gray.opacity(0.8))
+                    .lineLimit(3)
+                    .multilineTextAlignment(.leading)
             }
 
             Spacer()
+
+            filmInfoFooter
         }
-        .padding(.horizontal, isIpad ? 32 : 16)
-        .padding(.vertical, isIpad ? 16 : 8)
+        .padding(.vertical, 4)
     }
 
-    private var isIpad: Bool {
-        horizontalSizeClass == .regular
+    private var ratingBadge: some View {
+        HStack(spacing: 4) {
+            Image(systemName: "star.fill")
+                .font(.system(size: 10, weight: .bold))
+                .foregroundColor(.yellow)
+            Text(String(format: "%.1f", film.rating))
+                .font(.system(size: 11, weight: .bold))
+                .foregroundColor(.white)
+        }
+        .padding(.horizontal, 8)
+        .padding(.vertical, 4)
+        .background(
+            RoundedRectangle(cornerRadius: 8)
+                .fill(Color.black.opacity(0.7))
+                .background(BlurView(style: .systemUltraThinMaterialDark))
+        )
+    }
+
+    private var platformBadge: some View {
+        HStack(spacing: 4) {
+            Image(systemName: "tv.fill")
+                .font(.system(size: 10))
+                .foregroundColor(.white)
+            Text(film.platform)
+                .font(.system(size: 10, weight: .medium))
+                .foregroundColor(.white)
+        }
+        .padding(.horizontal, 8)
+        .padding(.vertical, 4)
+        .background(
+            RoundedRectangle(cornerRadius: 8)
+                .fill(LinearGradient(
+                    colors: [Color.red.opacity(0.8), Color.orange.opacity(0.8)],
+                    startPoint: .leading,
+                    endPoint: .trailing)
+                )
+        )
+    }
+
+    private var ratingRow: some View {
+        HStack(spacing: 4) {
+            Image(systemName: "star.fill")
+                .font(.system(size: 12))
+                .foregroundColor(.yellow)
+            Text(String(format: "%.1f", film.rating))
+                .font(.system(size: 13, weight: .medium))
+                .foregroundColor(.white)
+        }
+    }
+
+    private var durationRow: some View {
+        HStack(spacing: 4) {
+            Image(systemName: "clock.fill")
+                .font(.system(size: 12))
+                .foregroundColor(.gray)
+            Text(film.duration)
+                .font(.system(size: 13, weight: .medium))
+                .foregroundColor(.gray)
+        }
+    }
+
+    private var filmInfoFooter: some View {
+        HStack {
+            Spacer()
+            HStack(spacing: 4) {
+                Text("Tap untuk detail")
+                    .font(.system(size: 11, weight: .medium))
+                    .foregroundColor(.gray)
+                Image(systemName: "chevron.right")
+                    .font(.system(size: 10, weight: .semibold))
+                    .foregroundColor(.gray)
+            }
+        }
     }
 }
 
 #Preview {
-    FilmCardView(film: Film(
-        title: "Contoh Film",
-        genres: ["Drama"],
-        rating: 7.8,
-        platform: "Netflix",
-        duration: "2 jam",
-        synopsis: "Ini sinopsis pendek...",
-        posterName: "/test.jpg",
-        reviews: []
-    ))
-    .background(Color.black)
-    .previewDevice("iPad Pro (12.9-inch) (6th generation)")  
+    ZStack {
+        Color.black.ignoresSafeArea()
+
+        ScrollView {
+            VStack(spacing: 16) {
+                FilmCardView(film: Film(
+                    title: "The Dark Knight",
+                    genres: ["Action", "Crime", "Drama"],
+                    rating: 9.0,
+                    platform: "Netflix",
+                    duration: "2h 32m",
+                    synopsis: "When the menace known as the Joker wreaks havoc and chaos on the people of Gotham, Batman must accept one of the greatest psychological and physical tests.",
+                    posterName: "/test.jpg",
+                    reviews: []
+                ))
+
+                FilmCardView(film: Film(
+                    title: "Inception",
+                    genres: ["Sci-Fi", "Thriller"],
+                    rating: 8.8,
+                    platform: "Prime Video",
+                    duration: "2h 28m",
+                    synopsis: "A thief who steals corporate secrets through dream-sharing technology is given the inverse task of planting an idea into the mind of a C.E.O.",
+                    posterName: "/test2.jpg",
+                    reviews: []
+                ))
+            }
+            .frame(maxWidth: 700)
+            .padding()
+            .frame(maxWidth: .infinity)
+        }
+    }
 }

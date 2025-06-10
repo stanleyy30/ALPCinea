@@ -2,26 +2,78 @@ import SwiftUI
 
 struct BookmarkView: View {
     @ObservedObject var viewModel: BookmarkViewModel
-    
-    @Environment(\.horizontalSizeClass) var horizontalSizeClass
+    @State private var animateGradient = false
 
     var body: some View {
-        ScrollView {
-            contentView
-                .padding(.top, isIpad ? 40 : 16)
-                .frame(maxWidth: .infinity)
-                .background(Color.black)
+        NavigationStack {
+            ZStack {
+                backgroundView
+
+                ScrollView {
+                    contentView
+                        .padding(.top)
+                        .frame(maxWidth: 700)
+                        .padding(.horizontal, 24)
+                        .frame(maxWidth: .infinity, alignment: .center)
+                }
+            }
+            .navigationTitle("Bookmark")
+            .navigationBarTitleDisplayMode(.inline)
+            .onAppear {
+                viewModel.loadBookmarks()
+                withAnimation {
+                    animateGradient = true
+                }
+            }
         }
-        .background(Color.black.ignoresSafeArea())
-        .navigationTitle("Bookmark")
-        .navigationBarTitleDisplayMode(.inline)
-        .onAppear {
-            viewModel.loadBookmarks()
+    }
+
+    private var backgroundView: some View {
+        ZStack {
+            LinearGradient(
+                colors: [
+                    Color.black,
+                    Color(red: 0.05, green: 0.05, blue: 0.15),
+                    Color.black
+                ],
+                startPoint: .topLeading,
+                endPoint: .bottomTrailing
+            )
+            .ignoresSafeArea()
+
+            GeometryReader { geometry in
+                ForEach(0..<2, id: \.self) { index in
+                    Circle()
+                        .fill(
+                            RadialGradient(
+                                colors: [
+                                    Color.red.opacity(0.04),
+                                    Color.clear
+                                ],
+                                center: .center,
+                                startRadius: 0,
+                                endRadius: 120
+                            )
+                        )
+                        .frame(width: 240, height: 240)
+                        .offset(
+                            x: geometry.size.width * (index == 0 ? 0.8 : 0.2),
+                            y: geometry.size.height * (index == 0 ? 0.2 : 0.7)
+                        )
+                        .scaleEffect(animateGradient ? 1.1 : 0.9)
+                        .animation(
+                            Animation.easeInOut(duration: 4)
+                                .repeatForever(autoreverses: true)
+                                .delay(Double(index) * 1.0),
+                            value: animateGradient
+                        )
+                }
+            }
         }
     }
 
     private var contentView: some View {
-        VStack(alignment: .leading, spacing: isIpad ? 24 : 16) {
+        VStack(alignment: .leading, spacing: 24) {
             headerView
 
             if viewModel.bookmarkedFilms.isEmpty {
@@ -34,38 +86,61 @@ struct BookmarkView: View {
     }
 
     private var headerView: some View {
-        Text("\u{1F4D6} Bookmark Saya")
-            .font(.system(size: isIpad ? 34 : 28, weight: .bold, design: .rounded))
-            .foregroundColor(.green)
-            .padding(.horizontal, isIpad ? 32 : 16)
-    }
+        VStack(alignment: .leading, spacing: 8) {
+            Text("🔖 Bookmark Saya")
+                .font(.system(size: 28, weight: .bold, design: .rounded))
+                .foregroundStyle(
+                    LinearGradient(
+                        colors: [Color.white, Color.gray.opacity(0.8)],
+                        startPoint: .leading,
+                        endPoint: .trailing
+                    )
+                )
 
-    private var emptyView: some View {
-        Text("Belum ada film yang dibookmark.")
-            .foregroundColor(.gray)
-            .padding()
-            .frame(maxWidth: .infinity, alignment: .center)
-    }
-
-    private var filmListView: some View {
-        ForEach(viewModel.bookmarkedFilms) { film in
-            NavigationLink(destination: FilmDetailView(film: film, viewModel: viewModel)) {
-                FilmCardView(film: film)
-                    .padding(.horizontal, isIpad ? 32 : 16)
-            }
-            .buttonStyle(PlainButtonStyle())
+            Text("\(viewModel.bookmarkedFilms.count) film tersimpan")
+                .font(.system(size: 14, weight: .medium))
+                .foregroundColor(.gray)
         }
     }
 
-    private var isIpad: Bool {
-        horizontalSizeClass == .regular
+    private var emptyView: some View {
+        VStack(spacing: 20) {
+            Image(systemName: "bookmark.slash")
+                .font(.system(size: 64, weight: .light))
+                .foregroundColor(.gray.opacity(0.6))
+
+            VStack(spacing: 8) {
+                Text("Belum ada film tersimpan")
+                    .font(.system(size: 20, weight: .semibold))
+                    .foregroundColor(.white)
+
+                Text("Film yang kamu bookmark akan muncul di sini")
+                    .font(.system(size: 14))
+                    .foregroundColor(.gray)
+                    .multilineTextAlignment(.center)
+            }
+        }
+        .frame(maxWidth: .infinity, alignment: .center)
+        .padding(.vertical, 80)
+        .padding(.horizontal, 40)
+    }
+
+    private var filmListView: some View {
+        LazyVStack(spacing: 16) {
+            ForEach(viewModel.bookmarkedFilms) { film in
+                NavigationLink(destination: FilmDetailView(film: film, viewModel: viewModel)) {
+                    FilmCardView(film: film)
+                        .padding(.horizontal, 0)
+                }
+                .buttonStyle(PlainButtonStyle())
+            }
+        }
     }
 }
 
 #Preview {
     let viewModel = BookmarkViewModel()
-    return NavigationView {
-        BookmarkView(viewModel: viewModel)
-            .previewDevice("iPad Pro (12.9-inch) (6th generation)")
-    }
+    return BookmarkView(viewModel: viewModel)
+        .previewDevice("iPad Pro (12.9-inch) (6th generation)")
+        .previewInterfaceOrientation(.landscapeLeft)
 }
