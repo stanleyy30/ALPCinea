@@ -23,4 +23,3 @@ final class FilmViewModelTests: XCTestCase {
         wait(for: [expectation], timeout: 6.0)
     }
 }
-

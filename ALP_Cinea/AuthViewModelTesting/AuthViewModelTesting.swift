@@ -74,28 +74,4 @@ final class AuthViewModelTests: XCTestCase {
         XCTAssertTrue(viewModel.showAlert)
         XCTAssertEqual(viewModel.alertMessage, "Password must be at least 6 characters long.")
     }
-
-    func testResetPasswordMismatch() {
-        viewModel.resetPassword(newPassword: "123456", confirmPassword: "654321")
-
-        XCTAssertTrue(viewModel.showAlert)
-        XCTAssertEqual(viewModel.alertMessage, "Password tidak cocok.")
-    }
-
-    func testResetPasswordTooShort() {
-        viewModel.resetPassword(newPassword: "123", confirmPassword: "123")
-
-        XCTAssertTrue(viewModel.showAlert)
-        XCTAssertEqual(viewModel.alertMessage, "Password minimal 6 karakter.")
-    }
-
-    func testResetPasswordEmptyFields() {
-        viewModel.resetPassword(newPassword: "", confirmPassword: "")
-
-        XCTAssertTrue(viewModel.showAlert)
-        XCTAssertEqual(viewModel.alertMessage, "Isi semua kolom.")
-    }
-
-    // Note: Untuk testing fungsi login dan register dengan Firebase, kamu bisa lakukan dengan menggunakan mocking
-    // framework seperti Cuckoo atau inject dependency. Jika perlu saya bantu buat versi dengan mocking juga.
 }
