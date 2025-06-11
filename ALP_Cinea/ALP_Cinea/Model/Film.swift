@@ -1,3 +1,10 @@
+//
+//  Film.swift
+//  ALP_Cinea
+//
+//  Created by student on 11/06/25.
+//
+
 import Foundation
 
 struct Film: Identifiable {

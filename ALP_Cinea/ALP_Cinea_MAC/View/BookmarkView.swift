@@ -1,3 +1,10 @@
+//
+//  BookmarkView.swift
+//  ALP_Cinea_MAC
+//
+//  Created by student on 11/06/25.
+//
+
 import SwiftUI
 
 struct BookmarkView: View {
@@ -18,7 +25,6 @@ struct BookmarkView: View {
                 }
             }
             .navigationTitle("Bookmark")
-            .navigationBarTitleDisplayMode(.inline)
             .onAppear {
                 viewModel.loadBookmarks()
                 withAnimation {

@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		3FB3AD2A2DF96ADE00B55637 /* FirebaseFirestore in Frameworks */ = {isa = PBXBuildFile; productRef = 3FB3AD292DF96ADE00B55637 /* FirebaseFirestore */; };
+		3FB3AD2C2DF96B0100B55637 /* FirebaseAuth in Frameworks */ = {isa = PBXBuildFile; productRef = 3FB3AD2B2DF96B0100B55637 /* FirebaseAuth */; };
 		BF917AE62DEDD003006B9AAB /* FirebaseAI in Frameworks */ = {isa = PBXBuildFile; productRef = BF917AE52DEDD003006B9AAB /* FirebaseAI */; };
 		BF917AE82DEDD003006B9AAB /* FirebaseAnalytics in Frameworks */ = {isa = PBXBuildFile; productRef = BF917AE72DEDD003006B9AAB /* FirebaseAnalytics */; };
 		BF917AEA2DEDD003006B9AAB /* FirebaseAnalyticsOnDeviceConversion in Frameworks */ = {isa = PBXBuildFile; productRef = BF917AE92DEDD003006B9AAB /* FirebaseAnalyticsOnDeviceConversion */; };
@@ -79,10 +81,22 @@
 
 /* Begin PBXFileReference section */
 		3F0EF28F2DDEF21400C4E8F4 /* ALP_Cinea.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ALP_Cinea.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		3FB3ACFB2DF9634900B55637 /* ALP_Cinea_MAC.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ALP_Cinea_MAC.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		F5B8A2E12DF0BA9500542CF1 /* ALP_Cinea_IPAD.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ALP_Cinea_IPAD.app; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
+		3FB3AD2E2DF96C2D00B55637 /* Exceptions for "ALP_Cinea" folder in "ALP_Cinea_MAC" target */ = {
+			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
+			membershipExceptions = (
+				Model/Film.swift,
+				Model/User.swift,
+				ViewModel/AuthViewModel.swift,
+				ViewModel/BookmarkViewModel.swift,
+				ViewModel/FilmViewModel.swift,
+			);
+			target = 3FB3ACFA2DF9634900B55637 /* ALP_Cinea_MAC */;
+		};
 		F5B8A32C2DF0BAC200542CF1 /* Exceptions for "ALP_Cinea" folder in "ALP_Cinea_IPAD" target */ = {
 			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
 			membershipExceptions = (
@@ -105,8 +119,14 @@
 			isa = PBXFileSystemSynchronizedRootGroup;
 			exceptions = (
 				F5B8A32C2DF0BAC200542CF1 /* Exceptions for "ALP_Cinea" folder in "ALP_Cinea_IPAD" target */,
+				3FB3AD2E2DF96C2D00B55637 /* Exceptions for "ALP_Cinea" folder in "ALP_Cinea_MAC" target */,
 			);
 			path = ALP_Cinea;
+			sourceTree = "<group>";
+		};
+		3FB3ACFC2DF9634900B55637 /* ALP_Cinea_MAC */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			path = ALP_Cinea_MAC;
 			sourceTree = "<group>";
 		};
 		F5B8A2E22DF0BA9600542CF1 /* ALP_Cinea_IPAD */ = {
@@ -146,6 +166,15 @@
 				BF917B022DEDD004006B9AAB /* FirebaseFunctions in Frameworks */,
 				BF917AFC2DEDD004006B9AAB /* FirebaseDynamicLinks in Frameworks */,
 				BF917B002DEDD004006B9AAB /* FirebaseFirestoreCombine-Community in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		3FB3ACF82DF9634900B55637 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				3FB3AD2A2DF96ADE00B55637 /* FirebaseFirestore in Frameworks */,
+				3FB3AD2C2DF96B0100B55637 /* FirebaseAuth in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -189,6 +218,7 @@
 			children = (
 				3F0EF2912DDEF21400C4E8F4 /* ALP_Cinea */,
 				F5B8A2E22DF0BA9600542CF1 /* ALP_Cinea_IPAD */,
+				3FB3ACFC2DF9634900B55637 /* ALP_Cinea_MAC */,
 				F5B8A2F02DF0BAA900542CF1 /* Frameworks */,
 				3F0EF2902DDEF21400C4E8F4 /* Products */,
 			);
@@ -199,6 +229,7 @@
 			children = (
 				3F0EF28F2DDEF21400C4E8F4 /* ALP_Cinea.app */,
 				F5B8A2E12DF0BA9500542CF1 /* ALP_Cinea_IPAD.app */,
+				3FB3ACFB2DF9634900B55637 /* ALP_Cinea_MAC.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -287,6 +318,30 @@
 			productReference = 3F0EF28F2DDEF21400C4E8F4 /* ALP_Cinea.app */;
 			productType = "com.apple.product-type.application";
 		};
+		3FB3ACFA2DF9634900B55637 /* ALP_Cinea_MAC */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 3FB3AD042DF9634B00B55637 /* Build configuration list for PBXNativeTarget "ALP_Cinea_MAC" */;
+			buildPhases = (
+				3FB3ACF72DF9634900B55637 /* Sources */,
+				3FB3ACF82DF9634900B55637 /* Frameworks */,
+				3FB3ACF92DF9634900B55637 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			fileSystemSynchronizedGroups = (
+				3FB3ACFC2DF9634900B55637 /* ALP_Cinea_MAC */,
+			);
+			name = ALP_Cinea_MAC;
+			packageProductDependencies = (
+				3FB3AD292DF96ADE00B55637 /* FirebaseFirestore */,
+				3FB3AD2B2DF96B0100B55637 /* FirebaseAuth */,
+			);
+			productName = ALP_Cinea_MAC;
+			productReference = 3FB3ACFB2DF9634900B55637 /* ALP_Cinea_MAC.app */;
+			productType = "com.apple.product-type.application";
+		};
 		F5B8A2E02DF0BA9500542CF1 /* ALP_Cinea_IPAD */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = F5B8A2EB2DF0BA9800542CF1 /* Build configuration list for PBXNativeTarget "ALP_Cinea_IPAD" */;
@@ -341,11 +396,14 @@
 			isa = PBXProject;
 			attributes = {
 				BuildIndependentTargetsInParallel = 1;
-				LastSwiftUpdateCheck = 1640;
+				LastSwiftUpdateCheck = 1630;
 				LastUpgradeCheck = 1620;
 				TargetAttributes = {
 					3F0EF28E2DDEF21400C4E8F4 = {
 						CreatedOnToolsVersion = 16.2;
+					};
+					3FB3ACFA2DF9634900B55637 = {
+						CreatedOnToolsVersion = 16.3;
 					};
 					F5B8A2E02DF0BA9500542CF1 = {
 						CreatedOnToolsVersion = 16.4;
@@ -371,6 +429,7 @@
 			targets = (
 				3F0EF28E2DDEF21400C4E8F4 /* ALP_Cinea */,
 				F5B8A2E02DF0BA9500542CF1 /* ALP_Cinea_IPAD */,
+				3FB3ACFA2DF9634900B55637 /* ALP_Cinea_MAC */,
 			);
 		};
 /* End PBXProject section */
@@ -381,6 +440,13 @@
 			buildActionMask = 2147483647;
 			files = (
 				F5B8A3232DF0BAB000542CF1 /* ALP_Cinea_IPAD.app in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		3FB3ACF92DF9634900B55637 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -395,6 +461,13 @@
 
 /* Begin PBXSourcesBuildPhase section */
 		3F0EF28B2DDEF21400C4E8F4 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		3FB3ACF72DF9634900B55637 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -699,6 +772,60 @@
 			};
 			name = Release;
 		};
+		3FB3AD052DF9634B00B55637 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = ALP_Cinea_MAC/ALP_Cinea_MAC.entitlements;
+				CODE_SIGN_STYLE = Automatic;
+				COMBINE_HIDPI_IMAGES = YES;
+				CURRENT_PROJECT_VERSION = 1;
+				ENABLE_PREVIEWS = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+				);
+				MACOSX_DEPLOYMENT_TARGET = 15.4;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "UC-IMT.ALP-Cinea-MAC";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				REGISTER_APP_GROUPS = YES;
+				SDKROOT = macosx;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+			};
+			name = Debug;
+		};
+		3FB3AD062DF9634B00B55637 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = ALP_Cinea_MAC/ALP_Cinea_MAC.entitlements;
+				CODE_SIGN_STYLE = Automatic;
+				COMBINE_HIDPI_IMAGES = YES;
+				CURRENT_PROJECT_VERSION = 1;
+				ENABLE_PREVIEWS = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+				);
+				MACOSX_DEPLOYMENT_TARGET = 15.4;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "UC-IMT.ALP-Cinea-MAC";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				REGISTER_APP_GROUPS = YES;
+				SDKROOT = macosx;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+			};
+			name = Release;
+		};
 		F5B8A2E92DF0BA9800542CF1 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -714,7 +841,7 @@
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				IPHONEOS_DEPLOYMENT_TARGET = 18.5;
+				IPHONEOS_DEPLOYMENT_TARGET = 18.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -743,7 +870,7 @@
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				IPHONEOS_DEPLOYMENT_TARGET = 18.5;
+				IPHONEOS_DEPLOYMENT_TARGET = 18.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -778,6 +905,15 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
+		3FB3AD042DF9634B00B55637 /* Build configuration list for PBXNativeTarget "ALP_Cinea_MAC" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				3FB3AD052DF9634B00B55637 /* Debug */,
+				3FB3AD062DF9634B00B55637 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
 		F5B8A2EB2DF0BA9800542CF1 /* Build configuration list for PBXNativeTarget "ALP_Cinea_IPAD" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
@@ -801,6 +937,16 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
+		3FB3AD292DF96ADE00B55637 /* FirebaseFirestore */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = BF917AE42DEDD003006B9AAB /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseFirestore;
+		};
+		3FB3AD2B2DF96B0100B55637 /* FirebaseAuth */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = BF917AE42DEDD003006B9AAB /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseAuth;
+		};
 		BF917AE52DEDD003006B9AAB /* FirebaseAI */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = BF917AE42DEDD003006B9AAB /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
