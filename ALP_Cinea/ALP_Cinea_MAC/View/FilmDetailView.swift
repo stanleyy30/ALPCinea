@@ -216,7 +216,6 @@ struct FilmDetailView: View {
             }
         )
         .navigationTitle("Detail Film")
-        .navigationBarTitleDisplayMode(.inline)
         .onAppear {
             withAnimation {
                 animateGradient = true

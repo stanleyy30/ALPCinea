@@ -89,7 +89,11 @@
 		3FB3AD2E2DF96C2D00B55637 /* Exceptions for "ALP_Cinea" folder in "ALP_Cinea_MAC" target */ = {
 			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
 			membershipExceptions = (
+				Model/Bookmark.swift,
 				Model/Film.swift,
+				Model/Review.swift,
+				Model/TMDb.swift,
+				Model/TMDbGenre.swift,
 				Model/User.swift,
 				ViewModel/AuthViewModel.swift,
 				ViewModel/BookmarkViewModel.swift,

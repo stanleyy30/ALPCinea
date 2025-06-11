@@ -78,7 +78,8 @@ struct UpcomingView: View {
                     }
                 }
             }
-            .navigationBarHidden(true)
+            .navigationTitle("")
+            .toolbar(.hidden)
             .onAppear {
                 viewModel.fetchUpcomingFilms()
                 withAnimation {
