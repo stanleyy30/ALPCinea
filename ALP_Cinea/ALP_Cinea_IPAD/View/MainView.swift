@@ -28,7 +28,7 @@ struct MainView: View {
                     endPoint: .bottomTrailing
                 )
                 .ignoresSafeArea()
-                
+
                 GeometryReader { geometry in
                     ForEach(0..<2, id: \.self) { index in
                         Circle()
@@ -57,14 +57,12 @@ struct MainView: View {
                             )
                     }
                 }
-                
+
                 VStack(alignment: .leading, spacing: 0) {
                     headerView()
-                    
                     searchSection()
-                    
                     genreFilterSection()
-                    
+
                     ScrollView {
                         filmRecommendationsView()
                     }
@@ -83,7 +81,7 @@ struct MainView: View {
         }
         .accentColor(.red)
     }
-    
+
     private func headerView() -> some View {
         HStack {
             HStack(spacing: 12) {
@@ -97,12 +95,12 @@ struct MainView: View {
                             )
                         )
                         .frame(width: 40, height: 40)
-                    
+
                     Image(systemName: "film.fill")
                         .font(.system(size: 18, weight: .bold))
                         .foregroundColor(.white)
                 }
-                
+
                 VStack(alignment: .leading, spacing: 2) {
                     Text("Cinea")
                         .font(.system(size: 24, weight: .bold, design: .rounded))
@@ -113,7 +111,7 @@ struct MainView: View {
                                 endPoint: .trailing
                             )
                         )
-                    
+
                     Text("Temukan film terbaik")
                         .font(.system(size: 12, weight: .medium))
                         .foregroundColor(.gray)
@@ -123,8 +121,7 @@ struct MainView: View {
             Spacer()
 
             HStack(spacing: 16) {
-                Button(action: {
-                }) {
+                Button(action: {}) {
                     Image(systemName: "magnifyingglass")
                         .font(.system(size: 18, weight: .medium))
                         .foregroundColor(.white)
@@ -132,19 +129,19 @@ struct MainView: View {
                         .background(Color.white.opacity(0.1))
                         .clipShape(Circle())
                 }
-                
+
                 NavigationLink(destination: BookmarkView(viewModel: BookmarkViewModel())) {
                     ZStack {
                         Circle()
                             .fill(Color.white.opacity(0.1))
                             .frame(width: 40, height: 40)
-                        
+
                         Image(systemName: "bookmark.fill")
                             .font(.system(size: 18, weight: .medium))
                             .foregroundColor(.red)
                     }
                 }
-                
+
                 Button(action: {
                     showProfile.toggle()
                 }) {
@@ -152,7 +149,7 @@ struct MainView: View {
                         Circle()
                             .fill(Color.white.opacity(0.1))
                             .frame(width: 40, height: 40)
-                        
+
                         Image(systemName: "person.circle.fill")
                             .font(.system(size: 18, weight: .medium))
                             .foregroundColor(.white)
@@ -164,18 +161,18 @@ struct MainView: View {
         .padding(.horizontal, 24)
         .padding(.bottom, 20)
     }
-    
+
     private func searchSection() -> some View {
         VStack(spacing: 16) {
             HStack {
                 Image(systemName: "magnifyingglass")
                     .foregroundColor(.gray)
                     .font(.system(size: 16))
-                
+
                 TextField("Cari film, genre, atau aktor...", text: $searchText)
                     .foregroundColor(.white)
                     .font(.system(size: 16))
-                
+
                 if !searchText.isEmpty {
                     Button(action: {
                         searchText = ""
@@ -200,18 +197,18 @@ struct MainView: View {
         .padding(.horizontal, 24)
         .padding(.bottom, 20)
     }
-    
+
     private func genreFilterSection() -> some View {
         VStack(alignment: .leading, spacing: 12) {
             HStack {
                 Text("Kategori")
                     .font(.system(size: 18, weight: .semibold))
                     .foregroundColor(.white)
-                
+
                 Spacer()
             }
             .padding(.horizontal, 24)
-            
+
             ScrollView(.horizontal, showsIndicators: false) {
                 HStack(spacing: 12) {
                     GenreButton(title: "Semua", selected: $selectedGenre)
@@ -238,14 +235,13 @@ struct MainView: View {
                                 endPoint: .trailing
                             )
                         )
-                    
+
                     Text("\(filteredFilms.count) film tersedia")
                         .font(.system(size: 14, weight: .medium))
                         .foregroundColor(.gray)
                 }
-                
+
                 Spacer()
-                
             }
             .padding(.horizontal, 24)
 
@@ -268,13 +264,13 @@ struct MainView: View {
             Spacer(minLength: 100)
         }
     }
-    
+
     private func loadingView() -> some View {
         VStack(spacing: 16) {
             ProgressView()
                 .progressViewStyle(CircularProgressViewStyle(tint: .red))
                 .scaleEffect(1.2)
-            
+
             Text("Memuat film terbaru...")
                 .font(.system(size: 16, weight: .medium))
                 .foregroundColor(.gray)
@@ -282,24 +278,24 @@ struct MainView: View {
         .frame(maxWidth: .infinity)
         .padding(.vertical, 60)
     }
-    
+
     private func emptyStateView() -> some View {
         VStack(spacing: 16) {
             Image(systemName: "film.stack")
                 .font(.system(size: 48, weight: .light))
                 .foregroundColor(.gray.opacity(0.6))
-            
+
             VStack(spacing: 8) {
                 Text("Film tidak ditemukan")
                     .font(.system(size: 18, weight: .semibold))
                     .foregroundColor(.white)
-                
+
                 Text("Coba ubah kata kunci atau kategori pencarian")
                     .font(.system(size: 14))
                     .foregroundColor(.gray)
                     .multilineTextAlignment(.center)
             }
-            
+
             Button(action: {
                 searchText = ""
                 selectedGenre = "Semua"
@@ -357,8 +353,6 @@ struct GenreButton: View {
                         .stroke(Color.white.opacity(isSelected ? 0 : 0.2), lineWidth: 1)
                 )
         }
-        .scaleEffect(isSelected ? 1.05 : 1.0)
-        .animation(.easeInOut(duration: 0.2), value: isSelected)
     }
 }
 

@@ -25,6 +25,7 @@ struct FilmCardView: View {
                 )
         )
         .contentShape(Rectangle())
+        .frame(maxWidth: 700) 
     }
 
     private var posterSection: some View {
@@ -73,6 +74,7 @@ struct FilmCardView: View {
                     .font(.system(size: 13))
                     .foregroundColor(.gray.opacity(0.8))
                     .lineLimit(3)
+                    .multilineTextAlignment(.leading)
             }
 
             Spacer()
@@ -142,11 +144,10 @@ struct FilmCardView: View {
                 .foregroundColor(.gray)
         }
     }
-    
+
     private var filmInfoFooter: some View {
         HStack {
             Spacer()
-            
             HStack(spacing: 4) {
                 Text("Tap untuk detail")
                     .font(.system(size: 11, weight: .medium))
@@ -159,34 +160,37 @@ struct FilmCardView: View {
     }
 }
 
-
 #Preview {
     ZStack {
         Color.black.ignoresSafeArea()
-        
-        VStack(spacing: 16) {
-            FilmCardView(film: Film(
-                title: "The Dark Knight",
-                genres: ["Action", "Crime", "Drama"],
-                rating: 9.0,
-                platform: "Netflix",
-                duration: "2h 32m",
-                synopsis: "When the menace known as the Joker wreaks havoc and chaos on the people of Gotham, Batman must accept one of the greatest psychological and physical tests.",
-                posterName: "/test.jpg",
-                reviews: []
-            ))
-            
-            FilmCardView(film: Film(
-                title: "Inception",
-                genres: ["Sci-Fi", "Thriller"],
-                rating: 8.8,
-                platform: "Prime Video",
-                duration: "2h 28m",
-                synopsis: "A thief who steals corporate secrets through dream-sharing technology is given the inverse task of planting an idea into the mind of a C.E.O.",
-                posterName: "/test2.jpg",
-                reviews: []
-            ))
+
+        ScrollView {
+            VStack(spacing: 16) {
+                FilmCardView(film: Film(
+                    title: "The Dark Knight",
+                    genres: ["Action", "Crime", "Drama"],
+                    rating: 9.0,
+                    platform: "Netflix",
+                    duration: "2h 32m",
+                    synopsis: "When the menace known as the Joker wreaks havoc and chaos on the people of Gotham, Batman must accept one of the greatest psychological and physical tests.",
+                    posterName: "/test.jpg",
+                    reviews: []
+                ))
+
+                FilmCardView(film: Film(
+                    title: "Inception",
+                    genres: ["Sci-Fi", "Thriller"],
+                    rating: 8.8,
+                    platform: "Prime Video",
+                    duration: "2h 28m",
+                    synopsis: "A thief who steals corporate secrets through dream-sharing technology is given the inverse task of planting an idea into the mind of a C.E.O.",
+                    posterName: "/test2.jpg",
+                    reviews: []
+                ))
+            }
+            .frame(maxWidth: 700)
+            .padding()
+            .frame(maxWidth: .infinity)
         }
-        .padding()
     }
 }
